@@ -14,16 +14,16 @@ module.exports = {
   module: {
     rules: [
       {
-        test: '/\.css$/i',
+        test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: '/\.svg$/i',
-        loader: 'svg-inline-loader',
+        test: /(\.png$)/i,
+        type: 'asset/resource',
       },
       {
-        test: '/(\.png$)/i',
-        type: 'asset/resource',
+        test: /\.svg$/i,
+        loader: 'svg-inline-loader',
       },
     ],
   },

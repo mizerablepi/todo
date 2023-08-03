@@ -7,6 +7,35 @@
   <script src="main.js" defer></script>
 </head>
 <body>
-  
+  <aside>
+    <div class="logo">
+      <span>//</span> TODO
+    </div>
+    <div class="project">
+      <div id="project-logo" class="icon"></div>Projects:
+    </div>
+    <div class="lists">
+      
+    </div>
+    <div class="new-list">
+      <button>
+        <div id="new" class="icon"></div>New List
+      </button>
+    </div>
+  </aside>
+  <main>
+
+  </main>
+
+  <div class="modal hidden">
+    <div class="form">
+      <label for="title">Name: </label>
+      <input type="text" id="title" required>
+      <span id="error" class="hidden">* List with same name already exists</span>
+      <label for="description">Description: </label>
+      <textarea id="description" rows="6"></textarea>
+      <button id="create-list">Create</button>
+    </div>
+  </div>
 </body>
 </html>

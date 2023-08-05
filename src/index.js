@@ -1,5 +1,5 @@
 import './style.css';
-import { toggleModal,createNewList, renderLists } from './screenManager';
+import { toggleModal,createNewList, renderLists, createNewTask } from './screenManager';
 import projectSvg from './icons/format-list-checkbox.svg';
 import plusSvg from './icons/plus.svg';
 
@@ -14,6 +14,9 @@ newBtn.addEventListener('click', toggleModal);
 
 let createBtn = document.getElementById('create-list');
 createBtn.addEventListener('click', createNewList);
+
+let createTaskBtn = document.getElementById('create-task');
+createTaskBtn.addEventListener('click',createNewTask)
 
 
 renderLists();

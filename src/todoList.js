@@ -5,7 +5,7 @@ function todoList(title, description='') {
 
 function todoItem(title, notes = '', dueDate = 'none', priority = 0) {
   let complete = false;
-  let dueToday = (dueDate == time.getCurrentDate());
+  let dueToday = (dueDate == new Date().toDateString());
   return { title, notes, dueDate, priority, complete, dueToday };
 }
 
@@ -21,20 +21,20 @@ const todo = (function () {
     storage.remove(listTitle);
   }
   function addItemToList(itemTitle, itemNotes = '', itemDueDate = 'none', itemPriority = 0, listTitle) {
-    if (findItem(itemTitle, listTitle) == null) return;
+    if (findItemIndex(itemTitle, listTitle) != null) return null;
     let listObject = storage.get(listTitle.toLowerCase());
     listObject.todoItems.push(todoItem(itemTitle, itemNotes, itemDueDate, itemPriority));
     updateStorage(listTitle, listObject);
   }
   function removeItemFromList(itemTitle, listTitle) {
-    let itemIndex = findItemIndex(itemTitle);
+    let itemIndex = findItemIndex(itemTitle,listTitle);
     if (itemIndex == null) return;
     let listObject = storage.get(listTitle);
     listObject.todoItems.splice(itemIndex, 1);
     updateStorage(listTitle, listObject);
   }
   function changeItemPriorityFromList(itemTitle,listTitle,newPriority) {
-    let itemIndex = findItemIndex(itemTitle);
+    let itemIndex = findItemIndex(itemTitle,listTitle);
     if (itemIndex == null) return;
     let listObject = storage.get(listTitle);
         
@@ -42,11 +42,28 @@ const todo = (function () {
     updateStorage(listTitle, listObject);
   }
   function changeItemStatusFromList(itemTitle, listTitle) {
-    let itemIndex = findItemIndex(itemTitle);
+    let itemIndex = findItemIndex(itemTitle,listTitle);
     if (itemIndex == null) return;
     let listObject = storage.get(listTitle);
 
-    listObject.todoItems[itemIndex].complete = !listObject.todoItems[itemIndex].complete;
+    listObject.todoItems[itemIndex].complete = listObject.todoItems[itemIndex].complete ? false : true;
+    updateStorage(listTitle, listObject);
+  }
+  function changeItemTitleFromList(itemTitle, listTitle, newTitle) {
+    let itemIndex = findItemIndex(itemTitle, listTitle);
+    if (itemIndex == null) return;
+    let listObject = storage.get(listTitle);
+
+    listObject.todoItems[itemIndex].title = newTitle;
+    updateStorage(listTitle, listObject);
+  }
+  function changeItemDueDateFromList(itemTitle, listTitle, newDate) {
+    let itemIndex = findItemIndex(itemTitle, listTitle);
+    if (itemIndex == null) return;
+    let listObject = storage.get(listTitle);
+
+    listObject.todoItems[itemIndex].dueDate = newDate;
+    listObject.todoItems[itemIndex].dueToday = (newDate == new Date().toDateString()) ? true : false;
     updateStorage(listTitle, listObject);
   }
   function getItemsFromList(listTitle) {
@@ -67,14 +84,14 @@ const todo = (function () {
     let listObject = storage.get(listTitle.toLowerCase());
     if (listObject == null) return null;
     for (let i = 0; i < listObject.todoItems.length; i++){
-      if (listObject.todoItems[i] == itemTitle) {
+      if (listObject.todoItems[i].title == itemTitle) {
         return i;
       }
     }
     return null;
   }
 
-  return { createNewList, removeList, addItemToList, removeItemFromList, changeItemPriorityFromList, changeItemStatusFromList, getItemsFromList, getListDescription };
+  return { createNewList, removeList, addItemToList, removeItemFromList, changeItemPriorityFromList, changeItemStatusFromList, getItemsFromList, getListDescription, changeItemTitleFromList,changeItemDueDateFromList };
 })();
 
 const storage = (function () {
@@ -104,22 +121,7 @@ const storage = (function () {
     return collection;
   }
 
-  return {set,get,getAllKeys, getAllItems}
+  return {set,get,remove,getAllKeys, getAllItems}
 })();
-
-const time = (function () {
-  function getCurrentDate() {
-    const date = new Date();
-
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-
-    let currentDate = `${day}-${month}-${year}`;
-    return currentDate;
-  }
-
-  return { getCurrentDate };
-})()
 
 export {todo,storage};

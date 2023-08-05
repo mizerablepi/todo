@@ -48,6 +48,26 @@ aside{
   gap: 0.1rem;
 }
 
+.list-remove{
+  margin-left: auto;
+  background-color: inherit;
+  display: block;
+  width: fit-content;
+  padding-top: 0.2rem;
+}
+
+.list-remove:hover{
+  background-color: inherit;
+}
+
+.list-remove svg{
+  height: 0rem;
+}
+
+.list:hover .list-remove svg{
+  height: 0.8rem;
+}
+
 .list , .new-list{
   display: flex;
   align-items: center;
@@ -146,9 +166,65 @@ main{
   height: 1.3rem;
 }
 
+.task{
+  display: grid;
+  grid-template-columns: max-content 1fr 8rem 3rem max-content;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  padding: 0 0.3rem 0.8rem 0.5rem;
+  border-style: solid;
+  border-width: 0 0 0.1rem 0;
+  border-color: #efefef;
+}
+
+.task-check{
+  transform: scale(1.5);
+}
+
+.task-title{
+  border: none;
+  background-color: inherit;
+  font-size: 1rem;
+  padding: 0 0 0 0.7rem;
+  color: inherit;
+}
+
+.task-due-date button{
+  border: none;
+  background-color: inherit;
+  color: inherit;
+}
+
+.task-priority{
+  border: none;
+  background-color: inherit;
+  padding: 0 0 0 1rem;
+  font-weight: bold;
+  color: inherit;
+}
+
+.remove{
+  background-color: rgb(240, 23, 23);
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.3rem 0.1rem 0.3rem;
+}
+
+.remove svg{
+  height: 1rem;
+}
+
+.task[data-priority="2"]{
+  color: red;
+}
+
+.task[data-priority="1"]{
+  color: orange;
+}
+
 
 /* modal */
-.modal{
+.modal, .task-modal{
   position: absolute;
   top: 0;
   height: 100vh;

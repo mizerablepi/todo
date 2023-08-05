@@ -37,5 +37,18 @@
       <button id="create-list">Create</button>
     </div>
   </div>
+
+  <div class="task-modal hidden">
+    <div class="form">
+      <label for="task-title">Title: </label>
+      <input type="text" id="task-title" required>
+      <span id="task-error" class="hidden">* Task with same name already exists</span>
+      <label for="due-date">Due: </label>
+      <input type="date" name="due-date" id="due-date">
+      <label for="priority">Priority: </label>
+      <input type="number" id="priority">
+      <button id="create-task">Create</button>
+    </div>
+  </div>
 </body>
 </html>
